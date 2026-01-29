@@ -179,10 +179,15 @@ def run_simulation_full_details(case_name, S_init, delta_val):
 # ==========================================
 
 # 您可以取消注释运行想要的 Case
-df_sum1, df_det1 = run_simulation_full_details("Case 1 (强激励)", 150, 2)
+df_sum1, df_det1 = run_simulation_full_details("Case 1 (强激励)", 150, 1)
 with pd.ExcelWriter("Case1_全流程结果.xlsx") as writer:
     df_sum1.to_excel(writer, sheet_name="汇总信息", index=False)
     df_det1.to_excel(writer, sheet_name="所有轮次明细", index=False)
+
+df_sum2, df_det2 = run_simulation_full_details("Case 2 (中等激励)", 100, 1)
+with pd.ExcelWriter("Case2_全流程结果.xlsx") as writer:
+    df_sum2.to_excel(writer, sheet_name="汇总信息", index=False)
+    df_det2.to_excel(writer, sheet_name="所有轮次明细", index=False)
 
 df_sum3, df_det3 = run_simulation_full_details("Case 3 (弱激励)", 50, 1)
 with pd.ExcelWriter("Case3_全流程结果.xlsx") as writer:
