@@ -128,6 +128,20 @@ def run_simulation_full_details(case_name, S_init, delta_val):
         round_num += 1
         key_node = candidate_queue.pop(0)
         
+        # 获取关键企业的所有原始指标
+        node_params = nodes_data[key_node]
+        e_key = node_params['e']
+        r_key = node_params['r']
+        mu_key = node_params['mu']
+        eta_key = node_params['eta']
+        alpha_key = node_params['alpha']
+        
+        # 从原始数据中获取网络结构信息
+        network_row = df_network[df_network['节点ID'] == key_node].iloc[0]
+        node_type = network_row['节点类型']
+        in_degree = network_row['入度']
+        out_degree = network_row['出度']
+        
         # 1. 计算本轮博弈
         gamma = solve_bargaining_round(current_S, current_E, key_node, active_nodes, delta_val)
         subsidy_given = gamma * current_S
@@ -136,12 +150,19 @@ def run_simulation_full_details(case_name, S_init, delta_val):
         # 2. 提取关键信息
         k_idx = active_nodes.index(key_node)
         q_key = q_vec[k_idx]
-        r_key = nodes_data[key_node]['r']
         
-        # 3. 记录汇总表
+        # 3. 记录汇总表（包含更多指标）
         summary_records.append({
             '轮次': round_num,
             '关键企业ID': key_node,
+            '关键企业类型': node_type,
+            '关键企业入度': in_degree,
+            '关键企业出度': out_degree,
+            '关键企业初始排放e': e_key,
+            '关键企业净流出r': r_key,
+            '关键企业μ': mu_key,
+            '关键企业η': eta_key,
+            '关键企业α': alpha_key,
             '初始补贴S': current_S,
             '初始配额E': current_E,
             'Gamma': gamma,
@@ -195,4 +216,4 @@ with pd.ExcelWriter("Case3_全流程结果.xlsx") as writer:
     df_det3.to_excel(writer, sheet_name="所有轮次明细", index=False)
 
 print("\n✅ 计算完成！结果已保存到 Excel 文件中。")
-print("请打开 Excel 查看 '所有轮次明细' Sheet 获取每一轮的详细数据。")
+print("请打开 Excel 查看 '汇总信息' Sheet 获取每轮关键企业的详细指标。")
