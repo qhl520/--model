@@ -82,12 +82,12 @@ def main():
         plt.plot(q_vals, AC_vals, label="AC(q)", linewidth=2)
         plt.plot(q_vals, MC_vals, "--", label="MC(q)", linewidth=2)
 
-        plt.scatter(q_star, AC_star, c="black", zorder=5)
-        plt.scatter(q_star, MC_star, c="red", zorder=5)
+        #plt.scatter(q_star, AC_star, c="black", zorder=5)
+        #plt.scatter(q_star, MC_star, c="red", zorder=5)
 
         plt.xlabel("决策排放 q")
-        plt.ylabel("成本")
-        plt.title(f"企业 {fid} 的成本曲线")
+        plt.ylabel("成本C")
+        plt.title(f"企业 {fid} 成本曲线")
 
         plt.legend()
         plt.grid(alpha=0.3)
