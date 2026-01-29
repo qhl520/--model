@@ -121,7 +121,7 @@ def calculate_full_table(G):
             b_val = get_stratified_random_value(out_d, group_out_degrees, cfg["b_range"])
             
             # 5. 计算净流出
-            net_flow = b_val-a_val
+            net_flow = a_val - b_val
             
             # 6. 存入行
             data_rows.append({
